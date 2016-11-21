@@ -302,8 +302,8 @@ func (ns *ns) deleteNamespace(obj *coreapi.Namespace) error {
 }
 
 func hasIP(pod *coreapi.Pod) bool {
-	// Ensure pod has an IP address and isn't sharing the host network namespace
-	return len(pod.Status.PodIP) > 0 && !pod.Spec.HostNetwork
+	// Ensure pod is running, has an IP address and isn't sharing the host network namespace
+	return pod.Status.Phase == "Running" && len(pod.Status.PodIP) > 0 && !pod.Spec.HostNetwork
 }
 
 func equals(a, b map[string]string) bool {
